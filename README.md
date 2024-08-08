@@ -35,6 +35,7 @@ targets: [
 
 ```swift
 import XCTest
+import XCUITestHelper
 
 final class MyAppUITests: XCTestCase {
     override func setUpWithError() throws {
