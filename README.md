@@ -1,6 +1,6 @@
 # XCUITestHelper
 
-XCUITestHelper is a package what contains extensions for XCUITest.
+XCUITestHelper helps you writing UI tests within SwiftUI. It provides a set of useful extensions on [XCUIApplication](Sources/XCUITestHelper/XCUIApplication.swift), [XCUIElement](Sources/XCUITestHelper/XCUIElement.swift) and [XCUIElementQuery](Sources/XCUITestHelper/XCUIElementQuery.swift) to make your tests more readable and easier to maintain.
 
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2F0xWDG%2FXCUITestHelper%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/0xWDG/XCUITestHelper)
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2F0xWDG%2FXCUITestHelper%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/0xWDG/XCUITestHelper)
@@ -29,9 +29,10 @@ targets: [
 
 1. In Xcode, open your project and navigate to **File** → **Swift Packages** → **Add Package Dependency...**
 2. Paste the repository URL (`https://github.com/0xWDG/XCUITestHelper`) and click **Next**.
-3. Click **Finish**.
+3. Make sure you add it to the **UITest target**!
+4. Click **Finish**.
 
-## Usage
+## Usage / Examples
 
 ```swift
 import XCTest
@@ -45,21 +46,31 @@ final class MyAppUITests: XCTestCase {
     func testExample() throws {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
-        app.launchArguments += ["-AppleLanguages", "(en-US)"]
-        app.launchArguments += ["-AppleLocale", "\"en-US\""]
+
+        // * Set the app language to English.
+        app.setLanguage(to: .english)
+        // Do this before launching the app.
         app.launch()
 
-        // Wait for 1 second to continue
+        // * `Wait` for 1 second to continue
         app.wait(for: 1)
 
-        // Go back to previous screen (navigation)
+        // * Tap a `random` cell in a collection view.
+        // Random works with any kind of element, not just buttons.
+        app.collectionViews.buttons.random.tap()
+
+        // * Go back to previous screen (NavigationView)
         app.navigateBack()
 
-        // Tap on the last button
+        // * Tap on the last button
         app.buttons.lastMatch.tap()
 
-        // Tap on the second button
+        // * Tap on the second button
         app.buttons[1].tap()
+
+        // * Type something, and then clear it.
+        let textfield = app.searchFields.firstMatch
+        app.type(in: textfield, text: "a", action: .clear)
     }
 }
 ```

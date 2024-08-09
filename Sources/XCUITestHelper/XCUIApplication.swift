@@ -11,6 +11,7 @@
 
 #if canImport(XCTest)
 import XCTest
+import Foundation
 
 extension XCUIApplication {
     /// Navigate back
@@ -18,23 +19,12 @@ extension XCUIApplication {
         self.navigationBars.buttons.element(boundBy: 0).tap()
     }
 
-    /// Wait for a duration
-    /// 
-    /// - Parameter duration: Duration to wait
-    public func wait(for duration: TimeInterval) {
-        let testCase = XCTestCase()
-        let waitExpectation = testCase.expectation(
-            description: "Waiting"
-        )
-
-        let when = DispatchTime.now() + duration
-        DispatchQueue.main.asyncAfter(deadline: when) {
-            waitExpectation.fulfill()
-        }
-
-        testCase.waitForExpectations(
-            timeout: duration + 0.5
-        )
+    /// Set language of test to
+    ///
+    /// - Parameter to: language
+    public func setLanguage(to language: Locale.LanguageCode) {
+        self.launchArguments += ["-AppleLanguages", "(\(language.identifier))"]
+        self.launchArguments += ["-AppleLocale", "\"\(language.identifier)\""]
     }
 }
 
