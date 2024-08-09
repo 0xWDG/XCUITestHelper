@@ -13,14 +13,22 @@
 import XCTest
 
 /// Actions that can be performed on an XCUIElement.
+/// 
+/// This are actions that can be (automatically) performed on an XCUIElement.
 public enum XCUIElementAction {
-    /// Send (last button)
+    /// Send
+    /// 
+    /// This will search for the last button on the keyboard which is usually the "Send" button and will tap it.
     case send
 
-    /// Clear (last button on input field)
+    /// Clear
+    ///
+    /// This will search for the last button on the input field which is usually the "Clear" button and will tap it.
     case clear
 
     /// Do nothing
+    /// 
+    /// This will do nothing after the requested action.
     case none
 }
 
@@ -32,10 +40,13 @@ extension XCUIElement {
         return (self.value(forKey: "hasKeyboardFocus") as? Bool) ?? false
     }
 
-    /// Type some text and submit
+    /// Type some text and perform an action.
+    /// 
+    /// Focus the text field, type some text and perform an action if needed.
     ///
+    /// - Parameter in: Element to type in.
     /// - Parameter text: Text to type.
-    /// - Parameter press: Should press "Continue", "Send", "Search", ...
+    /// - Parameter press: Action to perform after typing.
     public func type(in textField: XCUIElement, text: String, action: XCUIElementAction = .send) {
         if textField.elementType == .textField ||
            textField.elementType == .secureTextField ||
@@ -63,12 +74,9 @@ extension XCUIElement {
         }
     }
 
-    /// Print all elements
-    func printAllElements() {
-        print(self.debugDescription)
-    }
-
     /// Wait for a duration
+    /// 
+    /// Wait for a specified duration, this is a blocking call.
     ///
     /// - Parameter duration: Duration to wait
     public func wait(for duration: TimeInterval) {
@@ -78,6 +86,15 @@ extension XCUIElement {
             waitExpectation.fulfill()
         }
         testCase.waitForExpectations(timeout: duration + 0.5)
+    }
+
+    /// Print all elements
+    /// 
+    /// This function will print all elements in the query.
+    /// 
+    /// - Note: This function is for debugging purposes only.
+    func printAllElements() {
+        print(self.debugDescription)
     }
 }
 
