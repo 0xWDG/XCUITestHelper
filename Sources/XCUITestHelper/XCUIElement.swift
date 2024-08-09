@@ -46,7 +46,7 @@ extension XCUIElement {
     ///
     /// - Parameter in: Element to type in.
     /// - Parameter text: Text to type.
-    /// - Parameter press: Action to perform after typing.
+    /// - Parameter action: Action to perform after typing.
     public func type(in textField: XCUIElement, text: String, action: XCUIElementAction = .send) {
         if textField.elementType == .textField ||
            textField.elementType == .secureTextField ||
