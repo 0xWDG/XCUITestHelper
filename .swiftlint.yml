@@ -4,7 +4,6 @@ excluded:
 
 opt_in_rules:
    - missing_docs
-   - empty_count
    - empty_string
    - toggle_bool
    - unused_optional_binding

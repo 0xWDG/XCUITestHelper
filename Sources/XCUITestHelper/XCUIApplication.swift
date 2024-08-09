@@ -20,7 +20,7 @@ extension XCUIApplication {
     /// 
     /// - Note: This will tap the first button in the navigation bar.
     public func navigateBack() {
-        if self.navigationBars.buttons.isEmpty {
+        if self.navigationBars.buttons.count == 0 {
             return
         }
 
